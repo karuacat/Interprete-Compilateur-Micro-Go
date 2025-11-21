@@ -56,6 +56,22 @@ rule token = parse
   | "{"  { BEGIN }
   | "}"  { END }
   | "*"  { STAR }
+  | "||" { OR }
+  | "&&" { AND }
+  | "==" { EQ }
+  | "!=" { NEQ }
+  | ">"  { GT }
+  | ">=" { GE }
+  | "<"  { LT }
+  | "<=" { LE }
+  | "+"  { PLUS }
+  | "-"  { MINUS }
+  | "/"  { SLASH }
+  | "%"  { PERCENT }
+  | "++" { INC }
+  | "--" { DEC }
+  | ":=" { ASSIGN }
+  | ","  { COMMA }
 
   | _    { raise (Error ("unknown character : " ^ lexeme lexbuf)) }
   | eof  { EOF }
@@ -67,10 +83,10 @@ and comment = parse
   | eof  { raise (Error "unterminated comment") }
   
 and string = parse
-  | '"'                { STRING("") }
   | "\\n"              { let s = "\n" in s ^ (string lexbuf) }
   | "\\t"              { let s = "\t" in s ^ (string lexbuf) }
   | "\\\""             { let s = "\"" in s ^ (string lexbuf) }
   | "\\\\"             { let s = "\\" in s ^ (string lexbuf) }
   | [^ '"' '\\']+ as s {s ^ (string lexbuf)}
+  | '"'                { STRING("") }
   | eof                { raise (Error "unterminated string") }
