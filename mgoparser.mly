@@ -11,6 +11,7 @@
 %token <string> IDENT
 %token <string> STRING
 %token PACKAGE IMPORT TYPE STRUCT
+%token ELSE FALSE FOR FUNC IF NIL RETURN TRUE VAR
 %token LPAR RPAR BEGIN END SEMI STAR
 %token EOF
 
